@@ -18,6 +18,7 @@
                 <div>
                     <button v-on:click="deleteTodo(todo)" class="btn" style="margin-top: 1em">Delete</button>
                     <button v-on:click="editTodo()" class="btn" style="margin-top: 1em">Edit</button>
+                    <button v-on:click="completeTodo(todo)" class="btn" style="margin-top: 1em" onclick="this.style.background='green'">Done</button>
                 </div>
             </li>
             <li v-for="todo in todos" v-show="isEditing" class="card card-body" style="width: 18rem; margin-top: 1em">
@@ -41,7 +42,7 @@
             },
             methods: {
                 addTodo: function (message) {
-                    this.todos.push({ text: this.message, priority: 'medium' });
+                    this.todos.push({ text: this.message, priority: 'medium', done: false });
                     this.message = '';
                 },
                 deleteTodo: function (todo) {
@@ -56,7 +57,10 @@
                 },
                 changePriority: function(status, todo) {
                     this.todos[this.todos.indexOf(todo)].priority = status;
-                }
+                },
+                completeTodo(todo) {
+                    this.todos[this.todos.indexOf(todo)].done = true;
+                },
             }
         })    
     </script>
