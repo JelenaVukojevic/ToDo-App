@@ -13,14 +13,15 @@
         <button v-on:click="addTodo(message)" class="btn">Add Todo</button>
         <ul>
             <li v-for="todo in todos" v-show="!isEditing" class="card card-body" style="width: 18rem; margin-top: 1em">
-                <p class="card-title">{{ todo }}</p>
+                <p class="card-title">{{ todo.text }}</p>
+                <button v-for="status in priorities" v-on:click="changePriority(status, todo)">{{ status }}</button>
                 <div>
-                    <button v-on:click="deleteTodo(todo)" class="btn">Delete</button>
-                    <button v-on:click="editTodo()" class="btn">Edit</button>
+                    <button v-on:click="deleteTodo(todo)" class="btn" style="margin-top: 1em">Delete</button>
+                    <button v-on:click="editTodo()" class="btn" style="margin-top: 1em">Edit</button>
                 </div>
             </li>
             <li v-for="todo in todos" v-show="isEditing" class="card card-body" style="width: 18rem; margin-top: 1em">
-                    <input v-model="todos[todos.indexOf(todo)]">
+                    <input v-model="todos[todos.indexOf(todo)].text">
                     <div>
                         <button v-on:click="saveTodo(todo)" class="btn">Save</button>
                     </div>
@@ -36,10 +37,11 @@
                 todos: [],
                 message: '',
                 isEditing: false,
+                priorities: ['low', 'medium' , 'high']
             },
             methods: {
                 addTodo: function (message) {
-                    this.todos.push(this.message);
+                    this.todos.push({ text: this.message, priority: 'medium' });
                     this.message = '';
                 },
                 deleteTodo: function (todo) {
@@ -51,6 +53,9 @@
                 saveTodo: function (todo) {
                     this.isEditing = false;
                     this.todos[this.todos.indexOf(todo)] = todo;
+                },
+                changePriority: function(status, todo) {
+                    this.todos[this.todos.indexOf(todo)].priority = status;
                 }
             }
         })    
