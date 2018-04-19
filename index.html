@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+</head>
+<body>
+    <div id="app" class="container">
+        <p>Todo App</p>
+        <input v-model="message">
+        <button v-on:click="addTodo(message)" class="btn">Add Todo</button>
+        <ul>
+            <li v-for="todo in todos" v-show="!isEditing" class="card card-body" style="width: 18rem; margin-top: 1em">
+                <p class="card-title">{{ todo }}</p>
+                <div>
+                    <button v-on:click="deleteTodo(todo)" class="btn">Delete</button>
+                    <button v-on:click="editTodo()" class="btn">Edit</button>
+                </div>
+            </li>
+            <li v-for="todo in todos" v-show="isEditing" class="card card-body" style="width: 18rem; margin-top: 1em">
+                    <input v-model="todos[todos.indexOf(todo)]">
+                    <div>
+                        <button v-on:click="saveTodo(todo)" class="btn">Save</button>
+                    </div>
+                </li>            
+        </ul>
+    </div>
+    
+    <script>
+        
+        var app = new Vue({
+            el: '#app',
+            data: {
+                todos: [],
+                message: '',
+                isEditing: false,
+            },
+            methods: {
+                addTodo: function (message) {
+                    this.todos.push(this.message);
+                    this.message = '';
+                },
+                deleteTodo: function (todo) {
+                    this.todos.splice(this.todos.indexOf(todo), 1);
+                },
+                editTodo: function () {
+                    this.isEditing = true;
+                },
+                saveTodo: function (todo) {
+                    this.isEditing = false;
+                    this.todos[this.todos.indexOf(todo)] = todo;
+                }
+            }
+        })    
+    </script>
+    
+    
+</body>
+</html>
