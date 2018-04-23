@@ -49,7 +49,7 @@
             },
             methods: {
                 addTodo: function () {
-                    axios.post('/todo', this.todo).then((response) => {
+                    axios.post('http://localhost:8000/api/todo', this.todo).then((response) => {
                         this.todos.push(response.data);
                     });
                     this.todo = {};
@@ -57,7 +57,7 @@
                     // this.message = '';
                 },
                 deleteTodo: function (todo) {
-                    axios.get('/delete/' + todo.id).then(({ data }) => {
+                    axios.delete('http://localhost:8000/api/todo/' + todo.id).then(({ data }) => {
                     this.todos.splice(this.todos.indexOf(data), 1);
                         // this.todos.splice(response.data, 1);
                     });
@@ -66,7 +66,7 @@
                     this.$set(todo, 'isEditing', true);
                 },
                 updateTodo: function (todo) {
-                    axios.put('/edit/' + todo.id, todo)
+                    axios.put('http://localhost:8000/api/edit/' + todo.id, todo)
                     .then(({data}) => {
                         let oldTodo = this.todos.indexOf(data)
                         oldTodo = data;
@@ -86,7 +86,7 @@
                 },
             },
             mounted() {
-                axios.get('/todo').then((response) => {
+                axios.get('http://localhost:8000/api/todo').then((response) => {
                     this.todos = response.data;
                 })
             }
